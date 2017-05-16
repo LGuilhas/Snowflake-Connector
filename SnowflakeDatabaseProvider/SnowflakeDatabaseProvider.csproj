@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D8DE026-833E-4E5F-9C7A-F48483E36985}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SnowflakeDatabaseProvider</RootNamespace>
+    <AssemblyName>SnowflakeDatabaseProvider</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Libraries\plugins\database\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Libraries\plugins\database\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OutSystems.HubEdition.DatabaseAbstractionLayer, Version=10.0.105.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\OutSystems.HubEdition.DatabaseAbstractionLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="OutSystems.RuntimeCommon, Version=10.0.405.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\OutSystems.RuntimeCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\SnowflakeDatabaseConfiguration.cs" />
+    <Compile Include="Configuration\SnowflakeRuntimeDatabaseConfiguration.cs" />
+    <Compile Include="DML\SnowflakeDMLSyntaxHighlightDefinitions.cs" />
+    <Compile Include="Execution\IDbCommandExtensions.cs" />
+    <Compile Include="Execution\SnowflakeDataReader.cs" />
+    <Compile Include="Introspection\SnowflakeDataTypeInfo.cs" />
+    <Compile Include="Properties\CommonAssemblyInfo.cs" />
+    <Compile Include="SnowflakeDatabaseProvider.cs" />
+    <Compile Include="DML\SnowflakeDMLAggregateFunctions.cs" />
+    <Compile Include="DML\SnowflakeDMLDefaultValues.cs" />
+    <Compile Include="DML\SnowflakeDMLEntityActions.cs" />
+    <Compile Include="DML\SnowflakeDMLFunctions.cs" />
+    <Compile Include="DML\SnowflakeDMLIdentifiers.cs" />
+    <Compile Include="DML\SnowflakeDMLOperators.cs" />
+    <Compile Include="DML\SnowflakeDMLQueries.cs" />
+    <Compile Include="DML\SnowflakeDMLService.cs" />
+    <Compile Include="Execution\SnowflakeExecutionService.cs" />
+    <Compile Include="Introspection\SnowflakeDatabaseInfo.cs" />
+    <Compile Include="Introspection\SnowflakeDatabaseObjectFactory.cs" />
+    <Compile Include="Introspection\SnowflakeIntrospectionService.cs" />
+    <Compile Include="Introspection\SnowflakeTableSourceColumnInfo.cs" />
+    <Compile Include="Introspection\SnowflakeTableSourceForeignKeyInfo.cs" />
+    <Compile Include="Introspection\SnowflakeTableSourceInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnowflakeDatabaseServices.cs" />
+    <Compile Include="SnowflakeProviderProperties.cs" />
+    <Compile Include="Transaction\SnowflakeTransactionService.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

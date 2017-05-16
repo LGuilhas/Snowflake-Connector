@@ -1,0 +1,11 @@
+Libraries/plugins/database/OutSystems.HubEdition.DatabaseAbstractionLayer.dll
+Libraries/plugins/database/OutSystems.RuntimeCommon.dll
+SnowflakeDatabaseProvider/obj/*
+*.pdb
+*.suo
+*.html
+*.zip
+*.nlp
+*.css
+*.suo
+*.cache

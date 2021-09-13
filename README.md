@@ -97,7 +97,7 @@ The original method for the snowflake datatype TIMESTAMP_NZ, the driver returns 
     internal static object ConvertToCSharpVal(UTF8Buffer srcVal, SFDataType srcType, Type destType)
 	{
 		try
-        {
+		{
 			// The most common conversions are checked first for maximum performance
 			(...)
 			else if (destType == typeof(DateTimeOffset))
@@ -119,7 +119,7 @@ The original method for the snowflake datatype TIMESTAMP_NZ, the driver returns 
 			(...)
 			else if (destType == typeof(DateTimeOffset))
 			{
-				return ConvertToDateTimeOffset(srcVal, srcType).;
+				return ConvertToDateTimeOffset(srcVal, srcType).DateTime;
 			}
 			(...)
 	}

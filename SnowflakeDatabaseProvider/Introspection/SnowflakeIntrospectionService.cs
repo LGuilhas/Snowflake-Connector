@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Odbc;
-using System.Linq;
 
 using OutSystems.HubEdition.Extensibility.Data;
 using OutSystems.HubEdition.Extensibility.Data.DatabaseObjects;
@@ -55,8 +53,8 @@ namespace SnowflakeDatabaseProvider.Introspection
                 {
                     while (reader.Read())
                     {
-                        string dbName = (string)reader["DATABASE_NAME"];
-                        string schemaName = (string)reader["NAME"];
+                        string dbName = (string)reader["database_name"];
+                        string schemaName = (string)reader["name"];
 
                         result.Add(new SnowflakeDatabaseInfo(DatabaseServices, dbName + "." + schemaName));
                     }
@@ -140,8 +138,10 @@ namespace SnowflakeDatabaseProvider.Introspection
                 SnowflakeDatabaseObjectFactory.ParseQualifiedTableName(tableSource.QualifiedName, out database, out schema, out table);
 
                 string queryInfoSchema = string.Format("SELECT DISTINCT TABLE_NAME, COLUMN_NAME, DATA_TYPE, IS_NULLABLE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE, COLUMN_DEFAULT, ORDINAL_POSITION " +
-                                             "FROM {0}.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{1}' " +
-                                             "ORDER BY ORDINAL_POSITION;", database, table);
+                                             "FROM {0}.INFORMATION_SCHEMA.COLUMNS " +
+                                             "WHERE TABLE_NAME = '{1}' " +
+                                             "AND TABLE_SCHEMA = '{2}' " +
+                                             "ORDER BY ORDINAL_POSITION;", database, table, schema);
 
                 string queryInfoTable = string.Format("DESC TABLE {0}", tableSource.QualifiedName);
 
@@ -155,8 +155,8 @@ namespace SnowflakeDatabaseProvider.Introspection
                 {
                     while (pkField == null && readerInfoTable.Read())
                     {
-                        string fieldName = (string)readerInfoTable["NAME"];
-                        string pk = (string)readerInfoTable["PRIMARY KEY"];
+                        string fieldName = (string)readerInfoTable["name"];
+                        string pk = (string)readerInfoTable["primary key"];
 
                         if (pk == "Y")
                         {
@@ -283,7 +283,7 @@ namespace SnowflakeDatabaseProvider.Introspection
             {
                 while (reader.Read())
                 {
-                    string tableName = (string)reader["NAME"];
+                    string tableName = (string)reader["name"];
                     if (!isTableSourceToIgnore(tableName))
                     {
                         string qualifiedTableName = GetQualifiedIdentifier(databaseInfo.Identifier, tableName);

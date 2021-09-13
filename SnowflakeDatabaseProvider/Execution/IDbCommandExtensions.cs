@@ -17,6 +17,8 @@ namespace System.Data
         //As we are relying on an ODBC driver and named parameters are not supported
         //we need to fix the command by 1st replacing the named parameters @xpto with ?
         //and setting the list of parameters with the proper order.
+
+        //Update (27/08/2021): The OleDbDriver doesn't support named params as well so we keep this logic 
         public static IDbCommand FixOdbcParameters(this IDbCommand cmd, bool isForReader)
         {
             List<IDataParameter> newParams = new List<IDataParameter>();
@@ -48,7 +50,7 @@ namespace System.Data
             }
 
             cmd.Parameters.Clear();
-
+            int paramIdx = 1;
             foreach (IDataParameter newParam in newParams)
             {
                 //booleans are forced as string for compatibility when updating
@@ -57,13 +59,9 @@ namespace System.Data
                     newParam.DbType = DbType.String;
                 }
 
-                //If the same parameter is used multiple times in the same query it will cause a duplicate issue
-                //we fix the name by appending an incremental number
-                string fixParamName = newParam.ParameterName;
-                for (int i = 1; cmd.Parameters.Contains(fixParamName); i++)
-                {
-                    fixParamName += i;
-                }
+                ////If the same parameter is used multiple times in the same query it will cause a duplicate issue
+                ////we fix the name by appending an incremental number
+                string fixParamName = newParam.ParameterName + paramIdx;
 
                 if (!newParam.ParameterName.Equals(fixParamName))
                 {
@@ -71,7 +69,10 @@ namespace System.Data
 
                     fixedParameter.DbType = newParam.DbType;
                     fixedParameter.Direction = newParam.Direction;
-                    fixedParameter.ParameterName = fixParamName;
+                    //The Snowflake OleDb driver does not support named params therefore 
+                    //we pass the index as the name to use it instead as this is the equivalent to
+                    //SnowflakeDbParameter(int ParameterIndex, SFDataType SFDataType)
+                    fixedParameter.ParameterName = paramIdx.ToString();
                     fixedParameter.SourceColumn = newParam.SourceColumn;
                     fixedParameter.SourceVersion = newParam.SourceVersion;
                     fixedParameter.Value = newParam.Value;
@@ -82,8 +83,8 @@ namespace System.Data
                 {
                     cmd.Parameters.Add(newParam);
                 }
-                
-              
+
+                paramIdx++;
             }
 
             return cmd;

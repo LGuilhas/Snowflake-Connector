@@ -126,7 +126,7 @@ namespace SnowflakeDatabaseProvider.DML
 
         private string CreateDateTime(string y, string mo, string d, string h, string m, string s)
         {
-            return string.Format("TO_TIMESTAMP({0},'-',{1},'-',{2},' ',{3},':',{4},':',{5})", y, mo, d, h, m, s);
+            return string.Format("TO_TIMESTAMP({0},'-',{1},'-',{2},' ',{3},':',{4},':',{5}, 'YYYY-MM-DD HH:MI:SS')", y, mo, d, h, m, s);
         }
 
         #endregion

@@ -94,7 +94,7 @@ namespace SnowflakeDatabaseProvider.Configuration {
         /// <returns></returns>
         protected override string AssembleBasicConnectionString()
         {
-            return string.Format("Driver=SnowflakeDSIIDriver;Server={0};Account={1};Warehouse={2};Role={3};Uid={4};Pwd={5}", Server, Account,Warehouse, Role, Username, Password);
+            return string.Format("host={0};account={1};warehouse={2};role={3};user={4};password={5}", Server, Account, Warehouse, Role, Username, Password);
         }
 
         /// <summary>
@@ -105,11 +105,11 @@ namespace SnowflakeDatabaseProvider.Configuration {
             string result = "";
             if (string.IsNullOrEmpty(Username) == false)
             {
-                result += string.Format("Uid={0};", Username);
+                result += string.Format("user={0};", Username);
 
                 if (string.IsNullOrEmpty(Password) == false)
                 {
-                    result += string.Format("Pwd={0};", Password);
+                    result += string.Format("password={0};", Password);
                 }
             }
             result += AdvancedConfiguration.AdvancedConnectionStringField;

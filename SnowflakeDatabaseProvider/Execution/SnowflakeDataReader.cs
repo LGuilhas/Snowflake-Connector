@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Data;
 using System.Data.Common;
-using System.Data.Odbc;
+
+using Snowflake.Data.Client;
+
 
 namespace SnowflakeDatabaseProvider.Execution
 {
@@ -20,9 +17,9 @@ namespace SnowflakeDatabaseProvider.Execution
     /// </summary>
     class SnowflakeDataReader : DbDataReader
     {
-        private OdbcDataReader otherReader;
+        private SnowflakeDbDataReader otherReader;
 
-        public SnowflakeDataReader(OdbcDataReader otherReader)
+        public SnowflakeDataReader(SnowflakeDbDataReader otherReader)
         {
             this.otherReader = otherReader;
         }
@@ -138,7 +135,7 @@ namespace SnowflakeDatabaseProvider.Execution
 
         public DateTime GetDate(int i)
         {
-            return otherReader.GetDate(i);
+            return otherReader.GetDateTime(i);
         }
 
         public override DateTime GetDateTime(int i)
@@ -213,7 +210,7 @@ namespace SnowflakeDatabaseProvider.Execution
 
         public TimeSpan GetTime(int i)
         {
-            return otherReader.GetTime(i);
+            return otherReader.GetTimeSpan(i);
         }
 
         public override object GetValue(int i)

@@ -17,7 +17,7 @@ using OutSystems.RuntimeCommon.ObfuscationProperties;
 using OutSystems.RuntimeCommon;
 using OutSystems.RuntimeCommon.Log;
 
-using System.Data.Odbc;
+using Snowflake.Data.Client;
 
 namespace SnowflakeDatabaseProvider.Execution {
 
@@ -51,7 +51,7 @@ namespace SnowflakeDatabaseProvider.Execution {
         /// </returns>
         public override bool IsConnectionException(DbException e)
         {
-            var sqlE = e as OdbcException;
+            var sqlE = e as SnowflakeDbException;
             return (sqlE != null) && sqlE.ErrorCode == ConnectionError;
         }
 
@@ -120,7 +120,7 @@ namespace SnowflakeDatabaseProvider.Execution {
         public override IDataReader ExecuteReader(IDbCommand cmd)
         {
             cmd.FixOdbcParameters(true);
-            return new SnowflakeDataReader((OdbcDataReader)base.ExecuteReader(cmd));
+            return new SnowflakeDataReader((SnowflakeDbDataReader)base.ExecuteReader(cmd));
         }
 
         public override int ExecuteNonQuery(IDbCommand cmd)
